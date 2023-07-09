@@ -84,8 +84,6 @@
 
 ## 接口文档例子
 
-![image-20230709154131845](C:\Users\xiachonger\AppData\Roaming\Typora\typora-user-images\image-20230709154131845.png)
-
 1. 用户相关接口：
 
 - 用户注册接口
