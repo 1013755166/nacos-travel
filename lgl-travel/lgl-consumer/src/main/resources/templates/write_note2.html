@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>修改游记</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-------------jquery库-------------->
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <!-------------Amazeui--------------->
+    <script type="text/javascript" src="js/amazeui.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/amazeui.css">
+    <!------------核心样式-------------->
+    <link rel="stylesheet" type="text/css" href="css/user.css">
+</head>
+<body>
+<!-------------------版头------------------->
+<div id="header">
+    <div class="cw1000">
+        <!-------------------导航------------------->
+        <div class="nav">
+            <ul>
+                <li><a title="" href="/client/desAll">孟津旅游</a><span>|</span></li>
+                <li><a title="" href="/client/noteAll">快乐游记</a><span>|</span></li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <!-------------------用户------------------->
+
+        <div class="user">
+            <a class="user-hd" href="#">
+                <img src="images/user_head_pic.jpg"/><b></b>
+                <div class="clear"></div>
+            </a>
+            <div class="user-bd">
+                <ul class="nav_sort">
+                    <li><a href="/client/toaddNote"><i class="i2"></i>写游记</a></li>
+                    <li><a th:href="@{/client/noteByUserId(userid=${session.user.userid})}"><i class="i9"></i>我的游记</a></li>
+                    <li><a th:href="@{/client/reviews(userid=${session.user.userid})}"><i class="i6"></i>我的评论</a></li>
+                    <li><a href="/client/logout"><i class="i8"></i>退出</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-----------------发布封面---------------->
+<div id="write_cover">
+    <form action="/client/updateNote" method="post">
+        <div class="replace_name">
+            <div class="cw1000">
+                <table class="table_list">
+                    <tbody>
+                    <tr>
+                        <td><input class="text" name="userid" type="hidden" th:value="${session.user.userid}"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text" name="id" type="hidden" th:value="${ee.id}"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text" name="notename" type="text" placeholder="填写游记标题" th:value="${ee.notename}"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text" type="text"  name="description" placeholder="填写游记内容" th:value="${ee.description}"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="text" type="text"  name="location" placeholder="填写游记地" th:value="${ee.location}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-----------------发布按钮---------------->
+        <div id="write_button">
+            <a class="exit" th:href="@{/client/noteByUserId(userid=${session.user.userid})}">退出</a>
+            <input class="express" type="submit" value="发表" />
+            <div class="clear"></div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

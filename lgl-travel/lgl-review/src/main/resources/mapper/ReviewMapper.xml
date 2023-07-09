@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lgl.lglreview.mapper.ReviewMapper">
+    <insert id="addReview" parameterType="com.lgl.lglcommon.entity.Review" useGeneratedKeys="true" keyProperty="id">
+        <!--AFTER :insert 先执行.    -->
+<!--        <selectKey order="AFTER" keyProperty="id" resultType="int">-->
+<!--            &lt;!&ndash; 获取最后一次执行insert语句的 key &ndash;&gt;-->
+<!--            select LAST_INSERT_ID()-->
+<!--        </selectKey>-->
+        INSERT INTO review(userid,content,reviewtime) VALUES(#{userid},#{content},#{reviewtime})
+    </insert>
+<!--    <insert id="addNoteReview" parameterType="com.lgl.lglcommon.entity.RND">-->
+<!--        &lt;!&ndash;AFTER :insert 先执行.    &ndash;&gt;-->
+<!--        <selectKey order="AFTER" keyProperty="reid" resultType="int">-->
+<!--            &lt;!&ndash; 获取最后一次执行insert语句的 key &ndash;&gt;-->
+<!--            select LAST_INSERT_ID()-->
+<!--        </selectKey>-->
+<!--        insert into review_nd(reid,noteid) values(#{reid}, #{noteid})-->
+<!--    </insert>-->
+</mapper>

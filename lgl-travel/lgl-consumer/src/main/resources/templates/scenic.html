@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>景区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-------------jquery库-------------->
+  	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <!-------------Amazeui--------------->
+    <script type="text/javascript" src="js/amazeui.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/amazeui.css">
+    <!------------核心样式-------------->
+    <link rel="stylesheet" type="text/css" href="css/style.css">    
+</head>
+<body>
+<!-------------------工具栏------------------->
+<div id="toolbar">
+    <div class="cw1200">
+        <ul class="fl">
+            <li class="tb"><p>您好，欢迎访问文化旅游网！</p></li>
+<!--            <li class="tb"><a href="/client/tologin">登录</a><span>|</span></li>-->
+<!--            <li class="tb"><a href="/client/toregister">注册</a></li>-->
+        </ul>
+        <ul class="fr">
+            <li class="tb">
+				<a href="#" th:text="${session.user.username}"></a>
+				<!-------------------用户------------------->
+				<div class="user">
+					<a class="user-hd" href="#">
+						<img src="images/user_head_pic.jpg"/><b></b>
+						<div class="clear"></div>
+					</a>
+					<div class="user-bd">
+						<ul class="nav_sort">
+							<li><a href="/client/toaddNote"><i class="i2"></i>写游记</a></li>
+							<li><a th:href="@{/client/noteByUserId(userid=${session.user.userid})}"><i class="i9"></i>我的游记</a></li>
+							<li><a th:href="@{/client/reviews(userid=${session.user.userid})}"><i class="i6"></i>我的评论</a></li>
+							<li><a href="/client/logout"><i class="i8"></i>退出</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-------------------版头------------------->
+<div id="header">
+    <div class="cw1200">
+        <div class="search_nav fl">
+            <!-------------------导航------------------->
+            <div class="nav">
+                <ul>
+                    <li><a class="cur" href="/client/desAll">孟津旅游</a></li>
+                    <li><a href="/client/noteAll">快乐游记</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!------------------景区版头-------------------->
+<div id="scenic_head" style="background:url(images/2c90cca2458c651b01458c95cc0b000c.jpg) no-repeat center;background-size:100%;">
+	<div class="cw1200">
+		<div class="title"><p>千唐志斋</p></div>
+		<a href="#" class="view_gallery" id="botn">查看图库<i class="am-icon-chevron-circle-right"></i></a>
+		
+		<ul style="display:none;" data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: true }" >
+		  <li>
+			<div class="am-gallery-item">
+				<a href="images/10F118AC-FE28-4986-A6D0-B9E739F8CFDC.jpg" class="">
+				  <img src="images/10F118AC-FE28-4986-A6D0-B9E739F8CFDC.jpg"  alt="远方 有一个地方 那里种有我们的梦想"/>
+				  <div style="display:none;">
+					<h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+					<div class="am-gallery-desc">2375-09-26</div>
+					</div>
+				</a>
+			</div>
+		  </li>
+		</ul>
+		<script>
+			$("#botn").live("click",function(){
+				$(".am-gallery-item img").click();
+			});
+		
+			$(document).ready(function(){
+				$(".am-icon-chevron-left").attr("class", "am-icon-close");
+			});
+		</script>
+	</div>
+</div>
+<!------------------子页框架-------------------->
+<div id="sub_from">
+    <div class="cw1200">
+		<div class="w810 fl">
+			<!------------------公共盒子-------------------->
+			<div class="public_box bg1">
+				<div class="public_title">
+					<div class="fl"><img src="images/from_title_left.png"/></div>
+					<div class="con">
+						<div class="lamp_ico"><img src="images/lamp_ico.png"/></div>
+						<div class="name"><img src="images/f_t_article.png"/></div>
+					</div>
+					<div class="fr"><img src="images/from_title_right.png"/></div>
+					<div class="clear"></div>
+				</div>
+				<!------------------景区介绍-------------------->
+				<div id="article">
+					<div class="con">
+						<p th:text="${desById.description}"></p>
+					</div>
+					<div class="map">
+						<img style="max-width:100%;" src="images/map.jpg"/>
+					</div>					
+				</div>
+			</div>
+			<!------------------公共盒子-------------------->
+			<div class="public_box bg1">
+				<div class="public_title">
+					<div class="fl"><img src="images/from_title_left.png"/></div>
+					<div class="con">
+						<div class="lamp_ico"><img src="images/lamp_ico.png"/></div>
+						<div class="name"><img src="images/f_t_comment.png"/></div>
+					</div>
+					<div class="fr"><img src="images/from_title_right.png"/></div>
+					<div class="clear"></div>
+				</div>
+				<!------------------评论-------------------->
+				<div id="comment">
+                    <div class="release">
+                        <img src="images/head1.jpg"/>
+                        <form action="/client/addProReview" method="post">
+                        <input name="userid" th:value="${session.user.userid}" type="hidden">
+                        <input class="text" type="text" placeholder="说说你的看法..." name="content"/>
+                        <input name="desid" th:value="${desById.id}" type="hidden">
+                        <input class="submit" type="submit" value="发表"/>
+                        </form>
+                        <div class="clear"></div>
+                    </div>
+					<div class="list">
+						<div class="tag">
+							<a class="cur" href="#">最新评论</a>
+						</div>
+						<ul>
+							<li th:each="rp : ${rp}">
+								<div class="pic"><img src="images/head1.jpg"/></div>
+								<div class="con">
+									<label th:text="${rp.username}"></label>
+									<p th:text="${rp.content}"></p>
+									<span th:text="'发表于：'+${rp.reviewtime}"></span>
+								</div>
+								<div class="tip"><span class="t_a t_box">沙发</span></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="w380 fr">
+			<!------------------公共盒子-------------------->
+			<div class="public_box bg2">
+				<div class="public_title">
+					<div class="fl"><img src="images/from_title_left.png"/></div>
+					<div class="con">
+						<div class="lamp_ico"><img src="images/lamp_ico.png"/></div>
+						<div class="name"><img src="images/f_t_online_book.png"/></div>
+					</div>
+					<div class="fr"><img src="images/from_title_right.png"/></div>
+					<div class="clear"></div>
+				</div>
+				<!------------------在线预订-------------------->
+				<div id="online_book">
+					<ul>
+						<li>景区名称：<span th:text="${desById.name}"></span></li>
+						<li>电话咨询：<span>0379-65517799</span></li>
+						<li>开放时间：<span>全年</span></li>
+						<li>详细地址：<span th:text="${desById.location}"></span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+    </div>
+</div>
+</body>
+</html>

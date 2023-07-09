@@ -1,0 +1,94 @@
+server:
+  port: 7002
+spring:
+  application:
+    name: lgl-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+        file-extension: yaml
+        namespace: c8738fad-9cbc-4888-8614-1b255c8800c9
+        group: dev
+        #可以支持多配置文件，但是需要在同一个名称空间下，可以不同分组
+        extension-configs[0]:
+          data-id: mysql-config-dev.yaml
+          group: dev
+          refresh: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user
+          uri: http://localhost:7000/
+          ###匹配规则
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+        - id: client
+          uri: http://localhost:7005/
+          ###匹配规则
+          predicates:
+            - Path=/client/**
+          filters:
+            - StripPrefix=1
+        - id: note
+          uri: http://localhost:7022/
+          ###匹配规则
+          predicates:
+            - Path=/note/**
+          filters:
+            - StripPrefix=1
+        - id: des
+          uri: http://localhost:7011/
+          ###匹配规则
+          predicates:
+            - Path=/des/**
+          filters:
+            - StripPrefix=1
+#    sentinel:
+#      transport:
+#        dashboard: 127.0.0.1:8333
+#        port: 8080
+#      enabled: true
+#      eager: true   #取消懒加载
+#      web-context-unify: false
+#      datasource:
+#        gw-flow: #可以自定义
+#          nacos:
+#            ### nacos连接地址
+#            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#            username: ${spring.cloud.nacos.discovery.username}
+#            password: ${spring.cloud.nacos.discovery.password}
+#            ## nacos连接的分组
+#            group-id: dev
+#            ###路由存储规则
+#            rule-type: gw_flow # 还有：degrade、authority、param-flow
+#            ### 读取配置文件的 data-id
+#            data-id: ${spring.application.name}-gw-flow-rules
+#            ###  读取文件类型为json
+#            data-type: json
+#            namespace: c8738fad-9cbc-4888-8614-1b255c8800c9
+#        flow-datsource: #可以自定义
+#          nacos:
+#            ### nacos连接地址
+#            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#            username: ${spring.cloud.nacos.discovery.username}
+#            password: ${spring.cloud.nacos.discovery.password}
+#            ## nacos连接的分组
+#            group-id: dev
+#            ###路由存储规则
+#            rule-type: flow # 还有：degrade、authority、param-flow
+#            ### 读取配置文件的 data-id
+#            data-id: ${spring.application.name}-flow-rules
+#            ###  读取文件类型为json
+#            data-type: json
+#            namespace: c8738fad-9cbc-4888-8614-1b255c8800c9
+
+

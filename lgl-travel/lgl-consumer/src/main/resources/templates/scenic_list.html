@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>景区列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-------------jquery库-------------->
+  	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <!-------------Amazeui--------------->
+    <script type="text/javascript" src="js/amazeui.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/amazeui.css">
+    <!------------核心样式-------------->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+<!--    <meta name="_csrf" th:content="${_csrf.token}">-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}">-->
+</head>
+<body>
+<!-------------------工具栏------------------->
+<div id="toolbar">
+    <div class="cw1200">
+        <ul class="fl">
+
+            <li class="tb"><p>您好，欢迎访问文化旅游网！</p></li>
+<!--            <li class="tb"><a href="/client/tologin">登录</a><span>|</span></li>-->
+<!--            <li class="tb"><a href="/client/toregister">注册</a></li>-->
+        </ul>
+        <ul class="fr" >
+            <li class="tb">
+				<a href="#" th:text="${session.user.username}">我的</a>
+				<!-------------------用户------------------->
+				<div class="user">
+					<a class="user-hd" href="#">
+						<img src="images/user_head_pic.jpg"/><b></b>
+						<div class="clear"></div>
+					</a>
+					<div class="user-bd">
+						<ul class="nav_sort">
+							<li><a href="/client/toaddNote"><i class="i2"></i>写游记</a></li>
+							<li><a th:href="@{/client/noteByUserId(userid=${session.user.userid})}"><i class="i9"></i>我的游记</a></li>
+							<li><a th:href="@{/client/reviews(userid=${session.user.userid})}"><i class="i6"></i>我的评论</a></li>
+							<li><a href="/client/logout"><i class="i8"></i>退出</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+<!-------------------版头------------------->
+<div id="header">
+    <div class="cw1200">
+        <div class="search_nav fl">
+            <!-------------------搜索------------------->
+            <div class="search radius6">
+				<form method="post" action="/client/searchdes">
+					<input  type='hidden' value='9'>
+					<input type="hidden" value="title,newstext">
+					<select  id="choose">
+						<option value="0">景区</option>
+						<option value="4">游记</option>
+					</select> 
+					<input class="inp_srh" name="name"  placeholder="请输入您要搜索的关键词" >
+					<input class="btn_srh" type="submit" value="搜索">
+				</form>
+			</div>
+            <!-------------------导航------------------->
+            <div class="nav">
+                <ul>
+                    <li><a class="cur" href="/client/desAll">孟津旅游</a></li>
+                    <li><a href="/client/noteAll">快乐游记</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<!------------------子页框架-------------------->
+<div id="sub_from">
+    <div class="cw1200">
+		<div class="w810 fl">
+			<!------------------公共盒子-------------------->
+			<div class="public_box bg1">
+				<div class="public_title">
+					<div class="fl"><img src="images/from_title_left.png"/></div>
+					<div class="con">
+						<div class="lamp_ico"><img src="images/lamp_ico.png"/></div>
+						<div class="name"><img src="images/f_t_news_list.png"/></div>
+					</div>
+					<div class="fr"><img src="images/from_title_right.png"/></div>
+					<div class="clear"></div>
+				</div>
+				<!------------------景区列表-------------------->
+				<div id="scenic_list">
+					<ul th:each="destination : ${des}">
+						<li>
+							<div class="pic"><a th:href="@{/client/desById(id=${destination.id})}"><img class="scale-effect" src="images/y1.jpg"/></a></div>
+							<div class="con">
+								<h3><a th:href="@{/client/desById(id=${destination.id})}" th:text="${destination.name}"></a></h3>
+								<p th:text="${destination.description}"></p>
+							</div>
+							<div class="tip">
+								<img src="images/scenic_ico.png"/>景区
+							</div>
+							<div class="clear"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+    </div>
+</div>
+<script>
+    // $(function () {
+    //     var token =$("meta[name='_csrf']").attr("token")
+    //     var header = $("meta[name='_csrf_header']").attr("token");
+    //     $(document).ajaxSend(function(e, xhr, options) {
+    //         xhr.setRequestHeader(header, token);
+    //     });
+    // })
+</script>
+</body>
+</html>

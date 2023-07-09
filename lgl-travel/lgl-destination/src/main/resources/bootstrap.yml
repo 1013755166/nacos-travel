@@ -1,0 +1,66 @@
+server:
+  port: 7011
+#  servlet:
+#    context-path: /api-user
+spring:
+  profiles:
+    active: dev
+  application:
+    name: lgl-des
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+        file-extension: yaml
+        namespace: c8738fad-9cbc-4888-8614-1b255c8800c9
+        group: dev
+        #可以支持多配置文件，但是需要在同一个名称空间下，可以不同分组
+        extension-configs[0]:
+          data-id: mysql-config-dev.yaml
+          group: dev
+          refresh: true
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/tourism?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 123456
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+
+
+
+
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: localhost:8848
+#  # 环境 dev|test|prod
+#  profiles:
+#    active: dev-mysql
+#  messages:
+#    encoding: UTF-8
+#    basename: i18n/messages
+#  servlet:
+#    multipart:
+#      max-file-size: 100MB
+#      max-request-size: 100MB
+#      enabled: true
+#  datasource:
+#    #MySQL
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 123456
+#    url: jdbc:mysql://localhost:3306/test?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+
+
+
+
+
+

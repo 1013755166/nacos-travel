@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>景区评论</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-------------jquery库-------------->
+  	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<!-------------Amazeui--------------->
+    <script type="text/javascript" src="js/amazeui.js"></script>
+<!--    <script src="js/layui.js" charset="utf-8"></script>-->
+    <link rel="stylesheet" type="text/css" href="css/amazeui.css">
+    <!------------核心样式-------------->
+    <link rel="stylesheet" type="text/css" href="css/user.css">
+<!--    <meta name="_csrf" th:content="${_csrf.token}">-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}">-->
+</head>
+<body>
+
+<!-------------------版头------------------->
+<div id="header">
+    <div class="cw1000">
+		<!-------------------导航------------------->
+		<div class="nav">
+			<ul>
+				<li><a title="" href="/client/desAll">孟津旅游</a><span>|</span></li>
+				<li><a title="" href="/client/noteAll">快乐游记</a><span>|</span></li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<!-------------------用户------------------->
+		<div class="user">
+			<a class="user-hd" href="#">
+				<img src="images/user_head_pic.jpg"/><b></b>
+				<div class="clear"></div>
+			</a>
+			<div class="user-bd">
+				<ul class="nav_sort">
+					<li><a href="/client/toaddNote"><i class="i2"></i>写游记</a></li>
+					<li><a th:href="@{/client/noteByUserId(userid=${session.user.userid})}"><i class="i9"></i>我的游记</a></li>
+					<li><a href="/client/reviews"><i class="i6"></i>我的评论</a></li>
+					<li><a href="/client/logout"><i class="i8"></i>退出</a></li>
+				</ul>
+			</div>
+		</div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<!-----------------快捷导航---------------->
+<div id="quick_nav">
+	<a href="/client/toaddNote"><span class="ico2"><img src="images/nav_ico2.png"/></span>发布游记</a>
+	<a th:href="@{/client/noteByUserId(userid=${session.user.userid})}"><span class="ico7"><img src="images/nav_ico7.png"/></span>我的游记</a>
+	<a th:href="@{/client/reviews(userid=${session.user.userid})}"><span class="ico6"><img src="images/nav_ico6.png"/></span>我的评论</a>
+</div>
+<!-----------------框架---------------->
+<div class="cw1000">
+	<div class="public_box pd30">
+		<div class="public_tag">
+			<ul>
+				<li><a th:href="@{/client/reviews(userid=${session.user.userid})}">游记评论</a></li>
+				<li><a class="cur" th:href="@{/client/proReview(userid=${session.user.userid})}">景区评论</a></li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<!-----------------景区评论---------------->
+		<div class="comments_list">
+			<ul>
+				<li class="pd_r150" th:each="pro : ${proreview}">
+					<div class="scenic">
+						<div class="tip"><img src="images/scenic_ico.png">景区</div>
+						<a href="#"><h3>龙潭大峡谷</h3></a>
+						<div class="clear"></div>
+					</div>
+					<div class="text">
+						<p th:text="${pro.content}"></p>
+					</div>
+					<div class="del" style="top:52px;">
+						<a th:href="@{/client/delReview/{id}(id=${pro.id})}"><i class="del_ico"></i>删除评论</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script>
+    // $(function () {
+    //     var token =$("meta[name='_csrf']").attr("token")
+    //     var header = $("meta[name='_csrf_header']").attr("token");
+    //     $(document).ajaxSend(function(e, xhr, options) {
+    //         xhr.setRequestHeader(header, token);
+    //     });
+    // })
+</script>
+</body>
+</html>
